@@ -57,13 +57,16 @@ app.listen(8080);
 |`type`   |          |`pdf` or `screenshot`|Rendering another type. |`http://puppeteer-renderer?url=http://www.google.com&type=pdf`|
 |(Extra options)|    |                     |Extra options (see [puppeteer API doc](https://github.com/GoogleChrome/puppeteer/blob/v1.1.0/docs/api.md#pagepdfoptions)) |`http://puppeteer-renderer?url=http://www.google.com&type=pdf&scale=2`|
 
+You can add a `PUPPETEER_RENDERER_KEY` environment variable and the service will require an `Authentication: {key}` header set to the same string as
+the environment variable to work.
+
 ## PDF File Name Convention
 
 Generated PDFs are returned with a `Content-disposition` header requesting the browser to download the file instead of showing it.
 The file name is generated from the URL rendered:
 
-| URL                                           | Filename                     |   
-|-----------------------------------------------|------------------------------|   
+| URL                                           | Filename                     |
+|-----------------------------------------------|------------------------------|
 | `https://www.example.com/`                    | `www.example.com.pdf`        |
 | `https://www.example.com:80/`                 | `www.example.com.pdf`        |
 | `https://www.example.com/resource`            | `resource.pdf`               |

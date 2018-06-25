@@ -6,6 +6,7 @@ const contentDisposition = require('content-disposition')
 const createRenderer = require('./renderer')
 
 const port = process.env.PORT || 3000
+const key = process.env.PUPPETEER_RENDERER_KEY || ''
 
 const app = express()
 
@@ -17,6 +18,12 @@ app.disable('x-powered-by')
 // Render url.
 app.use(async (req, res, next) => {
   let { url, type, ...options } = req.query
+
+  if (key.length > 0) {
+    if (key !== req.headers['authorization']) {
+      return res.status(402).send('Not authorized')
+    }
+  }
 
   if (!url) {
     return res.status(400).send('Search with url parameter. For eaxample, ?url=http://yourdomain')
